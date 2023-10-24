@@ -9,7 +9,7 @@ export default function Home() {
 
   return (
     <Provider store={store}>
-      <main className="h-screen w-screen p-20">
+      <main className="h-screen w-screen p-16">
         <div className="h-full w-full items-center flex flex-col justify-between font-mono text-sm lg:flex">
           <TitleBar />
           <QuestCard />

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import QuestPicker from "./quest-picker";
-import QUEST_TYPES from "../constants/quest-types";
+import QUEST_TYPES from "../utils/quest-types";
 import {
     QUEST_FORMATS_ALL,
     QUEST_FORMAT_ITEM,
@@ -9,7 +9,7 @@ import {
     QUEST_FORMAT_COMMAND,
     QUEST_FORMAT_SHEEP,
     QUEST_FORMAT
-} from "../constants/quest-formats"
+} from "../utils/quest-formats"
 import { useDispatch, useSelector } from "react-redux";
 import {
     addAttribute,
@@ -18,9 +18,9 @@ import {
     addArrayField,
     removeArrayField,
 } from "@/app/current-quest-slice";
+import { addQuest } from "@/app/all-quests-slice";
 
 export default function QuestForm() {
-    const [quest, setQuest] = useState(QUEST_FORMATS_ALL);
     const [submittedType, setSubmittedType] = useState(false);
 
     const currentQuest = useSelector((state) => state.currentQuest.quest);
@@ -149,6 +149,7 @@ export default function QuestForm() {
                     (e) => {
                         e.preventDefault();
                         console.log(currentQuest);
+                        dispatch(addQuest(currentQuest));
                     }
                 }>
                     {Object.keys(questFields)
@@ -160,7 +161,7 @@ export default function QuestForm() {
     };
 
     return (
-        <div className="flex flex-col items-center justify-start h-full">
+        <div className="flex flex-col items-center justify-start h-full w-1/3">
             {!submittedType && (<QuestPicker onQuestPick={setSubmittedType} />)}
             {submittedType && generateQuestForm(currentQuest['quest_type'])}
         </div>

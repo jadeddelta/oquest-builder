@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import QUEST_TYPES from "../constants/quest-types";
+import QUEST_TYPES from "../utils/quest-types";
 import { addArrayField, addAttribute } from "@/app/current-quest-slice";
 
 export default function QuestPicker({ onQuestPick }) {
@@ -10,7 +10,7 @@ export default function QuestPicker({ onQuestPick }) {
         <form onSubmit={(e) => {
             e.preventDefault();
             dispatch(addAttribute({ quest_type: e.target["quest-type"].value }));
-            dispatch(addAttribute({ description: [] }))
+            dispatch(addAttribute({ description: [] })); // TODO: i hate this i hate this can we change this later
             dispatch(addArrayField({ key: "description" }));
             onQuestPick(true);
         }}>
