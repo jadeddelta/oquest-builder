@@ -25,3 +25,12 @@ export function questToString(quest, index) {
 
     return questString;
 }
+
+export function questsToString(quests, startCount) {
+    let questsString = `quests:\n`;
+    quests.forEach((quest, index) => {
+        questsString += questToString(quest, Number(startCount) + Number(index));
+    });
+
+    return questsString;
+}

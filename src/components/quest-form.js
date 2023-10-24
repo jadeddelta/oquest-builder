@@ -154,7 +154,15 @@ export default function QuestForm() {
                 }>
                     {Object.keys(questFields)
                         .map((key, index) => generateQuestField(key, questFields[key], index))}
-                    <button type="submit" className="border-2 border-slate-400 rounded-sm px-1">Submit</button>
+                    <div className="flex flex-row justify-between mt-2">
+                        <button type="submit" className="border-2 border-yellow-400 rounded-sm px-1">Submit</button>
+                        <button
+                            type="button"
+                            className="border-2 border-blue-400 rounded-sm px-1"
+                            onClick={(e) => {
+                                setSubmittedType(false);
+                            }}>Reset Type</button>
+                    </div>
                 </form>
             </>
         );
