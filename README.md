@@ -16,6 +16,10 @@ not much really, other than silly UI upgrades and fleshing out each quest type b
 ### to do list 
 - [ ] INPUT VALIDATION!!! i trust people know the [documentation](https://ordwenplugins.gitbook.io/odailyquests/quests/create-a-quest) beforehand, but not everyone will and i want to make this as accessible as possible (but then again, this does require you to download node until i can find a way to host this LOL)
 - [ ] add a scroller/searcher for all the minecraft blocks
+- [ ] support for the COMMAND reward type
+- [ ] support for location based quests
+- [ ] support for villager based quests
+- [ ] literally so much refactoring cause this code is UGLYYY
 
 ## other things
 special thanks to [ordwen](https://github.com/Ordwen) for making the whole thing in the first place, i just made a builder for it.
