@@ -13,8 +13,11 @@ export const allQuestsSlice = createSlice({
         setStartCount: (state, action) => {
             state.startCount = action.payload;
         },
+        removeQuest: (state, action) => {
+            state.quests.splice(action.payload, 1);
+        }
     }
 });
 
-export const { addQuest, setStartCount } = allQuestsSlice.actions;
+export const { addQuest, setStartCount, removeQuest } = allQuestsSlice.actions;
 export default allQuestsSlice.reducer;

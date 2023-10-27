@@ -11,7 +11,6 @@ export const currentQuestSlice = createSlice({
         },
         addArrayAttribute: (state, action) => {
             state.quest[action.payload.key][action.payload.index] = action.payload.value;
-            // maybe add a check condition to purge empty strings?
         },
         addArrayField: (state, action) => {
             state.quest[action.payload.key].push("");
@@ -25,8 +24,20 @@ export const currentQuestSlice = createSlice({
                 ...{ [action.payload.key]: action.payload.value }
             };
         },
+        allowMultiple: (state, action) => {
+            if (state.quest[action.payload.key] === undefined) {
+                state.quest[action.payload.key] = ["", ""];
+                return;
+            }
+            state.quest[action.payload.key] = [state.quest[action.payload.key], ""];
+        },
+        disallowMultiple: (state, action) => {
+            state.quest[action.payload.key] = state.quest[action.payload.key][0];
+        },
         resetQuest: state => {
-            state.quest = {};
+            state.quest = {
+                description: [],
+            };
         }
     }
 });
@@ -37,6 +48,8 @@ export const {
     addArrayField,
     removeArrayField,
     addObjectAttribute,
-    resetQuest
+    resetQuest,
+    allowMultiple,
+    disallowMultiple,
 } = currentQuestSlice.actions;
 export default currentQuestSlice.reducer;

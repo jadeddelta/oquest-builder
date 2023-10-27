@@ -17,10 +17,17 @@ import {
     addObjectAttribute,
     addArrayField,
     removeArrayField,
+    resetQuest,
+    allowMultiple,
+    disallowMultiple
 } from "@/app/current-quest-slice";
 import { addQuest } from "@/app/all-quests-slice";
+import { current } from "@reduxjs/toolkit";
 
 export default function QuestForm() {
+    const CAN_BE_MULTIPLE = ["required_item", "required_entity", "commands"];
+    const IS_NUMBER = ["required_amount", "amount"];
+
     const [submittedType, setSubmittedType] = useState(false);
 
     const currentQuest = useSelector((state) => state.currentQuest.quest);
@@ -28,7 +35,94 @@ export default function QuestForm() {
 
     // TODO: this is messy, let's try to put these into components 
     const generateQuestField = (key, fieldType, index) => {
-        if (Array.isArray(fieldType)) {
+        if (CAN_BE_MULTIPLE.includes(key)) {
+            if (Array.isArray(currentQuest[key])) {
+                return (
+                    <>
+                        <label htmlFor={key}>{key}:</label>
+                        <button
+                            type="button"
+                            className="border-2 border-green-400 rounded-sm px-1 m-1"
+                            onClick={(e) => {
+                                dispatch(addArrayField({ key: key }));
+                            }}>
+                            Add Field
+                        </button>
+                        {currentQuest[key].length > 2 &&
+                            <button
+                                type="button"
+                                className="border-2 border-red-400 rounded-sm px-1 m-1"
+                                onClick={(e) => {
+                                    dispatch(removeArrayField({ key: key }));
+                                }}>
+                                Remove Field
+                            </button>
+                        }
+                        {currentQuest[key].length === 2 &&
+                            <button
+                                type="button"
+                                className="border-2 border-red-400 rounded-sm px-1 m-1"
+                                onClick={(e) => {
+                                    dispatch(disallowMultiple({ key: key }));
+                                }}>
+                                Disallow Multiple
+                            </button>
+                        }
+                        <br />
+                        {
+                            currentQuest[key].map((ikey, iindex) => {
+                                return (
+                                    <>
+                                        <label htmlFor={ikey}>{"- "}</label>
+                                        <input
+                                            type="text"
+                                            name={ikey}
+                                            id={ikey}
+                                            key={iindex}
+                                            className={"bg-black border-2 border-slate-400 rounded-sm m-1"}
+                                            onChange={(e) => {
+                                                dispatch(addArrayAttribute({
+                                                    key: key,
+                                                    index: iindex,
+                                                    value: e.target.value
+                                                }))
+                                            }}
+                                        />
+                                        <br />
+                                    </>
+                                );
+                            })
+                        }
+                    </>
+                );
+            } else {
+                return (
+                    <>
+                        <label htmlFor={key}>{key}:</label>
+                        <button
+                            type="button"
+                            className="border-2 border-green-400 rounded-sm px-1 m-1"
+                            onClick={(e) => {
+                                dispatch(allowMultiple({ key: key }));
+                            }}>
+                            Allow Multiple
+                        </button>
+                        <br />
+                        <label htmlFor={key}>{"- "}</label>
+                        <input
+                            type="text"
+                            name={key}
+                            id={key}
+                            className={"bg-black border-2 border-slate-400 rounded-sm m-1"}
+                            onChange={(e) => {
+                                dispatch(addAttribute({ [key]: e.target.value }))
+                            }}
+                        />
+                        <br />
+                    </>
+                );
+            }
+        } else if (Array.isArray(fieldType)) {
             return (
                 <>
                     <label htmlFor={key}>{key}:</label>
@@ -87,7 +181,8 @@ export default function QuestForm() {
                                     <>
                                         <label htmlFor={ikey}>{"- " + ikey}:</label>
                                         <input
-                                            type="text"
+                                            type={(IS_NUMBER.includes(ikey) ? "number" : "text")}
+                                            size={(IS_NUMBER.includes(ikey) ? "10" : "")}
                                             name={ikey}
                                             id={ikey}
                                             key={iindex}
@@ -113,7 +208,8 @@ export default function QuestForm() {
                 <>
                     <label htmlFor={key}>{key}:</label>
                     <input
-                        type="text"
+                        type={(IS_NUMBER.includes(key) ? "number" : "text")}
+                        size={(IS_NUMBER.includes(key) ? "10" : "")}
                         name={key}
                         id={key}
                         key={index}
@@ -137,6 +233,9 @@ export default function QuestForm() {
                 break;
             case "entity":
                 questFields = { ...questFields, ...QUEST_FORMAT_ENTITY };
+                if (currentQuest['quest_type'] === "SHEAR" && currentQuest['required_entity'] === "SHEEP") {
+                    questFields = { ...questFields, ...QUEST_FORMAT_SHEEP };
+                }
                 break;
             default:
                 break;
@@ -161,6 +260,7 @@ export default function QuestForm() {
                             className="border-2 border-blue-400 rounded-sm px-1"
                             onClick={(e) => {
                                 setSubmittedType(false);
+                                dispatch(resetQuest());
                             }}>Reset Type</button>
                     </div>
                 </form>
