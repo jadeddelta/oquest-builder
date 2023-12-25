@@ -8,14 +8,13 @@ export default function QuestList() {
 
     const dispatch = useDispatch();
 
-    //TODO: quest count and quest start do not align. makes me angy.
     return (
         <div className="h-full w-2/3 flex flex-col">
-            <div className="flex flex-row justify-between align-center mb-2">
+            <div className="flex flex-row justify-between items-center mb-2">
                 <button
                     type="button"
                     className="border-2 border-purple-400 rounded-sm px-1"
-                    onClick={(e) => {
+                    onClick={() => {
                         if (questList.length === 0) {
                             alert("There are no quests to export!");
                             return;

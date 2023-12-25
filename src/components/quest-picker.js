@@ -15,7 +15,7 @@ export default function QuestPicker({ onQuestPick }) {
             onQuestPick(true);
         }}>
             <label htmlFor="quest-type">Pick a quest type: </label>
-            <select name="quest-type" id="quest-type" className={"bg-black"}>
+            <select name="quest-type" id="quest-type" className={"mr-2 bg-black"}>
                 {Object.keys(QUEST_TYPES).map((key, index) => {
                     return (
                         <option key={index} value={key}>{key}</option>
@@ -23,7 +23,7 @@ export default function QuestPicker({ onQuestPick }) {
                 })}
             </select>
             <button
-                className="border-2 border-slate-400 rounded-sm px-1"
+                className="border-2 border-yellow-400 rounded-sm px-1"
             >Select</button>
         </form>
     );
