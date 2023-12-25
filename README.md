@@ -22,6 +22,7 @@ not much really, other than silly UI upgrades and fleshing out each quest type b
 - [ ] support for location based quests
 - [ ] support for villager based quests
 - [ ] literally so much refactoring cause this code is UGLYYY
+- [ ] maybe add a way to load quests from a file? or produce a string that encodes the quests?
 
 ## other things
 special thanks to [ordwen](https://github.com/Ordwen) for making the whole thing in the first place, i just made a builder for it.
