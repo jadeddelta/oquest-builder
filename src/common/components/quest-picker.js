@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
 import QUEST_TYPES from "../utils/quest-types";
-import { addArrayField, addAttribute } from "@/app/current-quest-slice";
+import { addArrayField, addAttribute } from "@/common/redux/current-quest-slice";
 
 export default function QuestPicker({ onQuestPick }) {
     const dispatch = useDispatch();

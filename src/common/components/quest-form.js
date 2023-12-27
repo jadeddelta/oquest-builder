@@ -20,8 +20,8 @@ import {
     resetQuest,
     allowMultiple,
     disallowMultiple
-} from "@/app/current-quest-slice";
-import { addQuest } from "@/app/all-quests-slice";
+} from "@/common/redux/current-quest-slice";
+import { addQuest } from "@/common/redux/all-quests-slice";
 import { current } from "@reduxjs/toolkit";
 
 export default function QuestForm() {
