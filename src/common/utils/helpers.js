@@ -1,31 +1,51 @@
-const ORDER = ["name", "menu_item", "description",
-    "quest_type", "required_item", "required_entity",
-    "sheep_color", "required_amount", "reward"]
+import { QUEST_DEFINITIONS } from "./quest-definitions";
 
-const IS_STRING = ["name", "description", "commands"]
+const ORDER = [
+    "name", "menu_item", "description", "quest_type",
+    "location", "villager_profession", "villager_level",
+    "required_item", "potion", "required_entity",
+    "sheep_color", "required_amount", "reward", "commands"
+]
+
+const IS_STRING = ["name", "description", "commands", "lore"]
 
 export function questToString(quest, index) {
-    // let questString = `quests:\n`;
     let questString = ``;
     questString += `  ${index}:\n`;
     ORDER.forEach((key) => {
         if (key in quest) {
-            if (quest[key] instanceof Array) {
-                if (quest[key].length === 1) {
-                    questString += getString(key, quest[key][0]);
-                    return;
-                }
+            const questType = QUEST_DEFINITIONS[key];
+            if (Array.isArray(questType)) {
+                // TODO: update this to take into account the command/lore fields
                 questString += `    ${key}:\n`;
-                quest[key].forEach((item) => {
-                    questString += getArrayString(item, IS_STRING.includes(key));
+                questType.forEach((item) => {
+                    questString += `      ${item}: ${quest[item]}\n`;
                 });
-            } else if (quest[key] instanceof Object) {
-                questString += `    ${key}:\n`;
-                Object.keys(quest[key]).forEach((item) => {
-                    questString += `      ${item}: ${quest[key][item]}\n`;
-                });
-            } else {
-                questString += getString(key, quest[key]);
+                return;
+            }
+
+            switch (questType) {
+                case "singlecap":
+                case "singlestr":
+                case "number":
+                    questString += getString(key, quest[key]);
+                    break;
+                case "optarraystr":
+                case "optarraycap":
+                    if (quest[key].length === 1 || !Array.isArray(quest[key])) {
+                        questString += getString(key, quest[key][0]);
+                        break;
+                    }
+                case "arraycap":
+                case "arraystr":
+                    questString += `    ${key}:\n`;
+                    quest[key].forEach((item) => {
+                        questString += getArrayString(item, IS_STRING.includes(key));
+                    });
+                    break;
+                default:
+                    questString += "what";
+                    break;
             }
         }
     });
@@ -33,7 +53,6 @@ export function questToString(quest, index) {
     return questString;
 }
 
-//TODO: put all of these into the main logic,only did it momentarily for generating valid quests
 function getString(key, value) {
     let baseString = `    ${key}: `
     baseString += (IS_STRING.includes(key)) ? `"${value}"\n` : value + `\n`;

@@ -9,6 +9,9 @@ export const currentQuestSlice = createSlice({
         addAttribute: (state, action) => {
             state.quest = { ...state.quest, ...action.payload }
         },
+        removeAttribute: (state, action) => {
+            delete state.quest[action.payload];
+        },
         addArrayAttribute: (state, action) => {
             state.quest[action.payload.key][action.payload.index] = action.payload.value;
         },
@@ -17,12 +20,6 @@ export const currentQuestSlice = createSlice({
         },
         removeArrayField: (state, action) => {
             state.quest[action.payload.key].pop();
-        },
-        addObjectAttribute: (state, action) => {
-            state.quest[action.payload.origin] = {
-                ...state.quest[action.payload.origin],
-                ...{ [action.payload.key]: action.payload.value }
-            };
         },
         allowMultiple: (state, action) => {
             if (state.quest[action.payload.key] === undefined) {
@@ -44,10 +41,10 @@ export const currentQuestSlice = createSlice({
 
 export const {
     addAttribute,
+    removeAttribute,
     addArrayAttribute,
     addArrayField,
     removeArrayField,
-    addObjectAttribute,
     resetQuest,
     allowMultiple,
     disallowMultiple,

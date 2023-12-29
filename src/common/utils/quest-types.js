@@ -14,7 +14,10 @@ const QUEST_TYPES = {
     "TAME": "ENTITY",
     "SHEAR": "ENTITY",
     "MILKING": "GLOBAL",
-    "EXP_LEVELS": "GLOBAL"
+    "EXP_LEVELS": "GLOBAL",
+    "PLAYER_DEATH": "GLOBAL",
+    "LOCATION": "LOCATION",
+    "VILLAGER_TRADE": "VILLAGER",
 };
 
 export default QUEST_TYPES;

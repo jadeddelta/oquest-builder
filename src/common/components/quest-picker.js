@@ -12,6 +12,7 @@ export default function QuestPicker({ onQuestPick }) {
             dispatch(addAttribute({ quest_type: e.target["quest-type"].value }));
             dispatch(addAttribute({ description: [] })); // TODO: i hate this i hate this can we change this later
             dispatch(addArrayField({ key: "description" }));
+            dispatch(addAttribute({ reward: "dummy" }))
             onQuestPick(true);
         }}>
             <label htmlFor="quest-type">Pick a quest type: </label>
