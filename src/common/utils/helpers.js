@@ -32,8 +32,12 @@ export function questToString(quest, index) {
                     break;
                 case "optarraystr":
                 case "optarraycap":
-                    if (quest[key].length === 1 || !Array.isArray(quest[key])) {
+                    if (quest[key].length === 1) {
                         questString += getString(key, quest[key][0]);
+                        break;
+                    }
+                    else if (!Array.isArray(quest[key])) {
+                        questString += getString(key, quest[key]);
                         break;
                     }
                 case "arraycap":

@@ -117,7 +117,7 @@ export default function QuestForm() {
 
         return (
             <>
-                <p className="pb-2">quest_type: {type}</p>
+                <p className="my-1">quest_type: {type}</p>
                 <form onSubmit={
                     (e) => {
                         e.preventDefault();
