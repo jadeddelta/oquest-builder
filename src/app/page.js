@@ -1,9 +1,9 @@
 'use client'
 
-import QuestCard from "@/components/quest-card";
-import TitleBar from "@/components/title-bar";
+import QuestCard from "@/common/components/quest-card";
+import TitleBar from "@/common/components/title-bar";
 import { Provider } from "react-redux";
-import store from "@/app/store";
+import store from "@/common/redux/store";
 
 export default function Home() {
 

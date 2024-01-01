@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { questToString, questsToString } from '@/utils/helpers';
-import { setStartCount, removeQuest } from '@/app/all-quests-slice';
+import { questToString, questsToString } from '@/common/utils/helpers';
+import { setStartCount, removeQuest } from '@/common/redux/all-quests-slice';
 
 export default function QuestList() {
     const questList = useSelector((state) => state.allQuests.quests);
